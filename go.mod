@@ -1,4 +1,4 @@
-module github.com/iamrz1/rest-log
+module github.com/hsaquib/rest-log
 
 go 1.16
 
