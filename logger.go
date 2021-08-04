@@ -1,6 +1,10 @@
 package rest_log
 
+import "sync"
+
 type LogLevel string
+
+var once sync.Once
 
 const (
 	Info  LogLevel = "Info"
@@ -20,8 +24,33 @@ type Logger interface {
 	Print(level LogLevel, fn, tid string, msg string)
 }
 
+var lgr Logger
+var applicationName = ""
+var isVerbose bool
+
 func New(verbose bool, appName string) Logger {
 	logger := NewZeroLevelLogger(verbose, appName)
 	logger.Info("GetDefaultStructLogger", "init", "Running in verbose mode")
 	return logger
+}
+
+func Init(verbose bool, appName string) {
+	applicationName = appName
+	isVerbose = verbose
+}
+
+func GetLogger() Logger {
+	once.Do(func() {
+		if applicationName == "" {
+			isVerbose = true
+			applicationName = "DefaultStructLogger"
+		}
+		logger := NewZeroLevelLogger(isVerbose, applicationName)
+		if isVerbose {
+			logger.Info("Logger", "init", "Running in verbose mode")
+		} else {
+			logger.Info("Logger", "init", "Running in non-verbose mode")
+		}
+	})
+	return lgr
 }
