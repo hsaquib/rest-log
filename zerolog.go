@@ -29,6 +29,7 @@ func NewZeroLevelLogger(verbose bool, appName string) Logger {
 		verbose:      verbose,
 	}
 }
+
 func (l zeroLevelLogger) Info(fn, tid string, msg string) {
 	level := zerolog.Disabled
 	if l.verbose {
