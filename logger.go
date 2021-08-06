@@ -45,11 +45,11 @@ func GetLogger() Logger {
 			isVerbose = true
 			applicationName = "DefaultStructLogger"
 		}
-		logger := NewZeroLevelLogger(isVerbose, applicationName)
+		lgr = NewZeroLevelLogger(isVerbose, applicationName)
 		if isVerbose {
-			logger.Info("Logger", "init", "Running in verbose mode")
+			lgr.Info("Logger", "init", "Running in verbose mode")
 		} else {
-			logger.Info("Logger", "init", "Running in non-verbose mode")
+			lgr.Info("Logger", "init", "Running in non-verbose mode")
 		}
 	})
 	return lgr
